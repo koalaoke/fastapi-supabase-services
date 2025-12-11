@@ -12,7 +12,7 @@ API RESTful desenvolvida para o gerenciamento de serviços, usuários e localiza
 
 1.  **Clone o repositório:**
     ```bash
-    git clone [https://github.com/seu-usuario/fastapi-supabase-services.git](https://github.com/seu-usuario/fastapi-supabase-services.git)
+    git clone https://github.com/seu-usuario/fastapi-supabase-services.git
     cd fastapi-supabase-services
     ```
 
@@ -37,6 +37,11 @@ API RESTful desenvolvida para o gerenciamento de serviços, usuários e localiza
     SUPABASE_URL=sua_url_aqui
     SUPABASE_SERVICE_KEY=sua_chave_service_role_aqui
     ```
+5.  **Configuração do Banco de Dados:**
+    Copie o conteúdo do arquivo `database_schema.sql`.
+    No painel do Supabase, vá em SQL Editor.
+    Cole o código e clique em RUN.
+
 
 ### Execução
 
@@ -44,3 +49,4 @@ Inicie o servidor de desenvolvimento:
 
 ```bash
 fastapi dev ./src/main.py
+```
