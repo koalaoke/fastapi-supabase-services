@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from src.routes.users import router as users_router
+from src.routes.cities import router as cities_router
 
 app = FastAPI()
 
@@ -8,3 +9,4 @@ def health_check():
     return {"status": "API rodando"}
 
 app.include_router(users_router)
+app.include_router(cities_router)
