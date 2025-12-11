@@ -11,7 +11,11 @@ async def get_users(skip : int = 0, limit : int = 10):
 
 @router.post("/users")
 async def create_users(user : UserModel):
-    supabase.auth.admin.create_user(user.model_dump())
+    supabase.auth.admin.create_user({
+        "email" : user.email,
+        "password" : user.password,
+        "email_confirm" : True
+    })
     return user.model_dump()
 
 @router.get("/users/{user_id}")
