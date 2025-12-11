@@ -31,7 +31,7 @@ API RESTful desenvolvida para o gerenciamento de serviços, usuários e localiza
     ```
 
 4.  **Variáveis de Ambiente:**
-    Crie um arquivo `.env` na raiz do projeto com as seguintes chaves:
+    Crie um arquivo `.env` em `/src` com as seguintes chaves:
 
     ```env
     SUPABASE_URL=sua_url_aqui
