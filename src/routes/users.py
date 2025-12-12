@@ -1,7 +1,7 @@
 from fastapi import APIRouter, UploadFile
 from src.database import supabase
 from src.schemas.users import UserModel, UpdateUserModel
-from src.utils.storage import upload_image
+from src.utils.storage import upload_image, delete_image_from_url
 
 router = APIRouter(prefix="/users")
 
@@ -32,16 +32,15 @@ async def update_user(user_id : str, update_user : UpdateUserModel):
 
 @router.post("/{user_id}/avatar")
 async def upload_avatar(user_id: str, file: UploadFile):
-    public_url = upload_image(file=file,bucket="avatars",folder="users")
-
+    user_obj = supabase.auth.admin.get_user_by_id(user_id)
+    if user_obj.user.user_metadata.get("avatar_url") is not None:
+        await delete_image_from_url(user_obj.user.user_metadata["avatar_url"],"avatars")
+    public_url = await upload_image(file=file,bucket="avatars",folder="users")
     supabase.auth.admin.update_user_by_id(user_id,{"user_metadata": {"avatar_url": public_url}})
-    return {"message": "Avatar atualizado", "url": public_url}
+    return {"message": "Avatar atualizado", "url": public_url} 
 
-@router.delete("/{user_id}/avatar",status_code=203)
+@router.delete("/{user_id}/avatar",status_code=204)
 async def delete_avatar(user_id: str):
     response = supabase.auth.admin.get_user_by_id(user_id)
-    avatar_url : str = response.user.user_metadata["avatar_url"]
-    filepath = "/".join(avatar_url.split("/")[-2:])
-    supabase.storage.from_("avatars").remove([filepath])
-    supabase.auth.admin.update_user_by_id(user_id,{"user_metadata": {"avatar_url": None}})
-    return filepath
+    avatar_url : str = response.user.user_metadata.get("avatar_url")
+    await delete_image_from_url(avatar_url,"avatars")
