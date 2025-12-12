@@ -11,9 +11,16 @@ async def create_service(service : ServiceModel):
     return service
 
 @router.get("")
-async def get_services():
-    services = supabase.table("services").select("*").execute()
-    return services
+async def get_services(
+    city_id : str | None = None,
+    category_id : str | None = None
+):
+    query = supabase.table("services").select("*")
+    if city_id:
+        query.eq("city_id",city_id)
+    if category_id:
+        query.eq("category_id",category_id)
+    return query.execute()
 
 @router.patch("/{service_id}")
 async def update_service(service_id : str , updated_service : UpdateServiceModel):
