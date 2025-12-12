@@ -50,3 +50,11 @@ Inicie o servidor de desenvolvimento:
 ```bash
 fastapi dev ./src/main.py
 ```
+
+### Testes
+
+Teste o funcionamento da API:
+
+```bash
+pytest
+```
