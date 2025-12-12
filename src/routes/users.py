@@ -44,3 +44,9 @@ async def delete_avatar(user_id: str):
     response = supabase.auth.admin.get_user_by_id(user_id)
     avatar_url : str = response.user.user_metadata.get("avatar_url")
     await delete_image_from_url(avatar_url,"avatars")
+    supabase.auth.admin.update_user_by_id(
+        user_id,
+        {"user_metadata" : {
+            "avatar_url" : None
+        }}
+        )
