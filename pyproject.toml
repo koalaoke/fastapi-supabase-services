@@ -8,3 +8,14 @@ dependencies = [
     "fastapi[standard]>=0.124.2",
     "supabase>=2.25.1",
 ]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+norecursedirs = ["venv", ".venv", ".git"]
+addopts = "--disable-warnings -v"
+filterwarnings = ["ignore::DeprecationWarning"]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.0.2",
+]
