@@ -1,5 +1,5 @@
 from fastapi import UploadFile, HTTPException
-from database import supabase
+from src.database import supabase
 import uuid
 
 async def upload_image(file: UploadFile, bucket: str, folder: str) -> str:

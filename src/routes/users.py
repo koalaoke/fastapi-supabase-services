@@ -36,3 +36,12 @@ async def upload_avatar(user_id: str, file: UploadFile):
 
     supabase.auth.admin.update_user_by_id(user_id,{"user_metadata": {"avatar_url": public_url}})
     return {"message": "Avatar atualizado", "url": public_url}
+
+@router.delete("/{user_id}/avatar",status_code=203)
+async def delete_avatar(user_id: str):
+    response = supabase.auth.admin.get_user_by_id(user_id)
+    avatar_url : str = response.user.user_metadata["avatar_url"]
+    filepath = "/".join(avatar_url.split("/")[-2:])
+    supabase.storage.from_("avatars").remove([filepath])
+    supabase.auth.admin.update_user_by_id(user_id,{"user_metadata": {"avatar_url": None}})
+    return filepath
