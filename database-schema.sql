@@ -21,6 +21,7 @@ create table public.services (
   created_at timestamp with time zone not null default now(),
   city_id bigint null,
   category_id bigint null,
+  logo_url text null,
   constraint services_pkey primary key (id),
   constraint services_category_id_fkey foreign KEY (category_id) references categories (id) on update CASCADE on delete set null,
   constraint services_city_id_fkey foreign KEY (city_id) references cities (id) on update CASCADE on delete set null
